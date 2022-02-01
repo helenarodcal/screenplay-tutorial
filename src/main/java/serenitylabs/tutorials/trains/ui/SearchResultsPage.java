@@ -12,4 +12,7 @@ public class SearchResultsPage {
 
     public static final Target ARTICLE_HEADINGS
             = Target.the("Articles headings").locatedBy(".search-results h2.h3");
+
+    public static final Target ARTICLE_ABSTRACTS
+            = Target.the("Articles abstracts").locatedBy(".search-results p");
 }
