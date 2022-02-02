@@ -10,9 +10,8 @@ public class CookiesSettings {
     private static final  Target END_COOKIE_CONFIGURATION = Target.the("Finish configuration button").locatedBy("#cb-confirmedSettings button");
 
     public static Performable acceptAll() {
-        return Task.where(
-                Click.on(ACCEPT_COOKIES_BUTTON),
-                Click.on(END_COOKIE_CONFIGURATION)
+        return Task.where("{0} accepts all cookies",
+                Click.on(ACCEPT_COOKIES_BUTTON).then(Click.on(END_COOKIE_CONFIGURATION))
         );
     }
 }
