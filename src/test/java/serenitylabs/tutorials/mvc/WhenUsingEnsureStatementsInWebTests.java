@@ -12,7 +12,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
 
-import static serenitylabs.tutorials.mvc.pageObjects.TodoPage.NEW_TODO_FIELD;
+import static org.openqa.selenium.Keys.ENTER;
+import static serenitylabs.tutorials.mvc.pageObjects.TodoPage.*;
 
 @RunWith(SerenityRunner.class)
 public class WhenUsingEnsureStatementsInWebTests {
@@ -58,6 +59,36 @@ public class WhenUsingEnsureStatementsInWebTests {
         warren.attemptsTo(
                 Open.url("https://todomvc.com/examples/angularjs/#/"),
                 Ensure.that(NEW_TODO_FIELD).attribute("placeholder").isEqualTo("What needs to be done?")
+        );
+    }
+
+    @Test
+    public void weCanReadTextContent() {
+        warren.attemptsTo(
+                Open.url("https://todomvc.com/examples/angularjs/#/"),
+                Enter.theValue("Walk the dog").into(NEW_TODO_FIELD).thenHit(ENTER),
+                Ensure.that(LIST_ENTRY).text().isEqualTo("Walk the dog")
+        );
+    }
+
+    @Test
+    public void weCanConvertTypes() {
+        warren.attemptsTo(
+                Open.url("https://todomvc.com/examples/angularjs/#/"),
+                Enter.theValue("Walk the dog").into(NEW_TODO_FIELD).thenHit(ENTER),
+                Enter.theValue("Feed the cat").into(NEW_TODO_FIELD).thenHit(ENTER),
+                Ensure.that(REMAINING_TODO_ITEMS).text().asAnInteger().isEqualTo(2)
+        );
+    }
+
+    @Test
+    public void weCanReadCollectionsOfTextValues() {
+        warren.attemptsTo(
+                Open.url("https://todomvc.com/examples/angularjs/#/"),
+                Enter.theValue("Walk the dog").into(NEW_TODO_FIELD).thenHit(ENTER),
+                Enter.theValue("Feed the cat").into(NEW_TODO_FIELD).thenHit(ENTER),
+                Ensure.that(LIST_ENTRY).textValues().hasSize(2),
+                Ensure.that(LIST_ENTRY).textValues().contains("Feed the cat")
         );
     }
 }
